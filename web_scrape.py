@@ -2,16 +2,21 @@ import requests
 from bs4 import BeautifulSoup
 import json
 
-url_array = ["https://www.who.int/", "https://www.unicefusa.org/?form=donate&gad=1&gclid=Cj0KCQjw4vKpBhCZARIsAOKHoWSCEa_HxUtDkIhKAx2goONQzOQuurgo-nAocETXIqmiKymuDwm7JQkaAiKDEALw_wcB", "https://www.redcross.org/?cid=generic&med=cpc&source=google&scode=RSG00000E017&&&gclid=Cj0KCQjw4vKpBhCZARIsAOKHoWQU-8tFJPzcZPJxBy0RjVVllv4rCVkFGN_6qh9e53eJg6yahXZDxjcaAkEaEALw_wcB&gclsrc=aw.ds"]
+url_array = ["https://www.who.int/"]
 accumulated_data = []
+session = requests.Session()
 
 for i in url_array:
     url = i
-    response = response.get(url)
+    response = session.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
     data = {
-
-    }
+        "title": soup.find('h1').text if soup.find('h1') else "Title not found",
+        "description": soup.find('p').text if soup.find('p') else "Description not found",
+        "project_details": soup.find('div', {'class': 'project-details'}).text if soup.find('div', {'class': 'project-details'}) else "Project details not found",
+        "latest_news": [item.text for item in soup.find_all('div', {'class': 'news-item'})],
+        "upcoming_events": [event.text for event in soup.find_all('div', {'class': 'event'})]
+        }
     accumulated_data.append(data)
 
 json_data = json.dumps(accumulated_data)
