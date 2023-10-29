@@ -4,18 +4,6 @@
 
 This is a humanitarian chatbot created using Dialogflow, a natural language processing platform. The chatbot is designed to provide information and assistance related to humanitarian crises, such as disaster relief, support, and general information. It aims to engage users in informative conversations and offer help during times of crisis.
 
-## Features
-
-- **General Information**: The chatbot can provide general information about humanitarian crises, their causes, and preventive measures.
-
-- **Specific Crisis Details**: Users can inquire about specific crises, such as natural disasters or health emergencies, and get up-to-date information.
-
-- **Support and Donations**: The chatbot can guide users on how to support humanitarian efforts, donate to relief organizations, or volunteer.
-
-- **Safety Instructions**: In the event of a crisis, the chatbot can provide safety instructions and guidelines to protect users and their communities.
-
-- **News Updates**: Users can receive the latest news and updates about ongoing humanitarian situations.
-
 ## Getting Started
 
 ### Prerequisites
