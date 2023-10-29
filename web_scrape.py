@@ -1,24 +1,21 @@
-import requests
-from bs4 import BeautifulSoup
-import json
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+import time
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 
-url_array = ["https://www.who.int/"]
-accumulated_data = []
-session = requests.Session()
 
-for i in url_array:
-    url = i
-    response = session.get(url)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    data = {
-        "title": soup.find('h1').text if soup.find('h1') else "Title not found",
-        "description": soup.find('p').text if soup.find('p') else "Description not found",
-        "project_details": soup.find('div', {'class': 'project-details'}).text if soup.find('div', {'class': 'project-details'}) else "Project details not found",
-        "latest_news": [item.text for item in soup.find_all('div', {'class': 'news-item'})],
-        "upcoming_events": [event.text for event in soup.find_all('div', {'class': 'event'})]
-        }
-    accumulated_data.append(data)
+driver = webdriver.Chrome()
 
-json_data = json.dumps(accumulated_data)
-with open('scraped_data.json', 'w') as json_file:
-    json_file.write(json_data)
+search_url = "https://www.who.int/data/collections"
+driver.get(search_url)
+
+box = driver.find_element(By.XPATH, '//*[@id="PageContent_C035_Col00"]/label/input')
+box.send_keys("tuberculosis")
+box.send_keys(Keys.RETURN)
+time.sleep(5)
+first_result_link = driver.find_element(By.CSS_SELECTOR, "#collections > div:nth-child(14) > div > a")
+first_result_url = first_result_link.get_attribute("href")
+print("First search result URL:", first_result_url)
+
+driver.close()
