@@ -1,4 +1,4 @@
-# Humanitarian Chatbot using Dialogflow
+# Humanitarian Chatbot
 
 ## Overview
 
